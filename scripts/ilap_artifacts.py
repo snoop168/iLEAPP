@@ -38,6 +38,7 @@ from scripts.artifacts.dhcpl import get_dhcpl
 from scripts.artifacts.discordAcct import get_discordAcct
 from scripts.artifacts.discordJson import get_discordJson
 from scripts.artifacts.discordManifest import get_discordManifest
+from scripts.artifacts.duetExpertCenter import get_duetExpertCenter
 from scripts.artifacts.FacebookMessenger import get_FacebookMessenger
 from scripts.artifacts.filesAppsclient import get_filesAppsclient
 from scripts.artifacts.filesAppsdb import get_filesAppsdb
@@ -48,6 +49,7 @@ from scripts.artifacts.geodPDPlaceCache import get_geodPDPlaceCache
 from scripts.artifacts.googleDuo import get_googleDuo
 from scripts.artifacts.icloudMeta import get_icloudMeta
 from scripts.artifacts.icloudPhotoMeta import get_icloudPhotoMeta
+from scripts.artifacts.intents import get_intents
 from scripts.artifacts.quickLook import get_quickLook
 from scripts.artifacts.iCloudWifi import get_iCloudWifi
 from scripts.artifacts.icloudSharedalbums import get_icloudSharedalbums
@@ -161,6 +163,7 @@ tosearch = {'lastBuild': ('IOS Build', '*LastBuildInfo.plist'),
             'discordAcct': ('Discord', '*/var/mobile/Containers/Data/Application/*/Documents/mmkv/mmkv.default'),
             'discordJson': ('Discord', '*/com.hammerandchisel.discord/fsCachedData/*'),
             'discordManifest': ('Discord', '*/private/var/mobile/Containers/Data/Application/*/Documents/RCTAsyncLocalStorage_V1/manifest.json'),
+            'duetExpertCenter': ('Duet Expert Center', '*private/var/mobile/Library/DuetExpertCenter/streams/userNotificationEvents/local/*'),
             'FacebookMessenger': ('Facebook Messenger', '**/lightspeed-*.db*'),
             'filesAppsclient': ('Files App', '*private/var/mobile/Library/Application Support/CloudDocs/session/db/client.db*'),
             'filesAppsdb': ('Files App', '*private/var/mobile/Library/Application Support/CloudDocs/session/db/server.db*'),
@@ -177,6 +180,7 @@ tosearch = {'lastBuild': ('IOS Build', '*LastBuildInfo.plist'),
             'imoHD_Chat': ('IMO HD Chat', ('**/IMODb2.sqlite*','private/var/mobile/Containers/Data/Application/*/Library/Caches/videos/*.webp')),
             'instagramThreads':('Instagram', '*/mobile/Containers/Data/Application/*/Library/Application Support/DirectSQLiteDatabase/*.db*'),
             'interactionCcontacts': ('InteractionC', '**/interactionC.db'),
+            'intents': ('AppIntents', '*/private/var/mobile/Library/Biome/streams/public/AppIntent/local/*'),
             'keyboardAppUsage': ('Keyboard', '*/private/var/mobile/Library/Keyboard/app_usage_database.plist'),
             'keyboardLexicon': ('Keyboard', '*/private/var/mobile/Library/Keyboard/*-dynamic.lm/dynamic-lexicon.dat'),
             'kikMessages': ('Kik', ('**/kik.sqlite*','*/mobile/Containers/Shared/AppGroup/*/cores/private/*/content_manager/data_cache/*')),
