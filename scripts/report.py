@@ -104,6 +104,8 @@ def get_icon_name(category, artifact):
             icon = 'user'
         if artifact == 'DISCORD MANIFEST':
             icon = 'file-text'
+    elif category == 'DUET EXPERT CENTER':
+        icon = 'bell'
     elif category == 'FACEBOOK MESSENGER':
         icon = 'facebook'
     elif category == 'FILES APP':
@@ -135,6 +137,11 @@ def get_icon_name(category, artifact):
             icon = 'user'
     elif category == 'INSTALLED APPS':
         icon = 'package'
+    elif category == 'INTENTS':
+        if artifact == 'CALLS':
+            icon = 'phone-call'
+        elif artifact == 'MESSAGES':
+            icon == 'message-square'
     elif category == 'INTERACTIONC':
         if artifact == 'CONTACTS':
             icon = 'user'

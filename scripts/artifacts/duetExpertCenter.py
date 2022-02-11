@@ -7,6 +7,7 @@ import struct
 #from bplist import *
 import pprint
 import nska_deserialize as nd
+import os
 
 from scripts.artifact_report import ArtifactHtmlReport
 from scripts.ilapfuncs import logfunc, logdevinfo, timeline, kmlgen, tsv, is_platform_windows, open_sqlite_db_readonly
@@ -24,6 +25,12 @@ def get_duetExpertCenter(files_found, report_folder, seeker):
         file_found = str(file_found)
         if "tombstone" in file_found:
             continue
+
+        if os.path.isdir(file_found):
+            print("directory")
+            continue # Skip all other files
+        else:
+            print("matched")
         logfunc(file_found)
         with open(file_found, "rb") as file:
     
@@ -36,19 +43,18 @@ def get_duetExpertCenter(files_found, report_folder, seeker):
                 datastart = file.tell()+32
                 
                 record_marker = int.from_bytes(file.read(4), byteorder='little')
+                file.seek(24, 1)
                 
-                timestamp1 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(struct.unpack('d',file.read(8))[0] + 978307200))
-                timestamp2 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(struct.unpack('d',file.read(8))[0] + 978307200))
+                #timestamp1 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(struct.unpack('d',file.read(8))[0] + 978307200))
+                #timestamp2 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(struct.unpack('d',file.read(8))[0] + 978307200))
                 #unknown = format(bin(int(file.read(4).hex(), base=16))[2:], '032')
-                unknown = int(file.read(4).hex(), base=16)
-                identifier2 = int.from_bytes(file.read(4), byteorder='little')
+                #unknown = int(file.read(4).hex(), base=16)
+                #identifier2 = int.from_bytes(file.read(4), byteorder='little')
                 data = file.read(length)
                 
                 if record_marker == 1:
 
-                    #print(record_marker, timestamp1, timestamp2, unknown)
                     message, _ = blackboxprotobuf.decode_message(data, notification_typedef)
-                    #print(typedef)
                     notification_date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(message['1']['1'] + 978307200))
                     notification_date2 = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(message['3'] + 978307200))
 
@@ -63,21 +69,16 @@ def get_duetExpertCenter(files_found, report_folder, seeker):
                     app = message['1']['8']
                     indicator = message['2']
                     indicator2 = message['5']
-                    data_list.append((notification_date, notification_date2, indicator2, indicator, title, text, app))
-
-                    
-                        
-                        
-                        
-                        
+                    data_list.append((notification_date, notification_date2, title, text, app))
+      
                 file.seek(nextOffset)
 
-    description = "Description -- change me"
-    report = ArtifactHtmlReport('DuetExpertCenter - Notifications')
-    report.start_artifact_report(report_folder, 'DuetExpertCenter - Notifications, description')
+    
+    report = ArtifactHtmlReport('Duet Expert Center - Notifications')
+    report.start_artifact_report(report_folder, 'Notifications')
     report.add_script()
-    data_headers = ('Time1', 'Time2', 'Indicator2', 'Indicator', 'Title', 'Text', 'App Identifier')
-    report.write_artifact_data_table(data_headers, data_list, 'Duet Expert Center - Notification - FilePath (CHANGEME)')
+    data_headers = ('Unknown Time 1', 'Unknown Time 2', 'Title', 'Text', 'App Identifier')
+    report.write_artifact_data_table(data_headers, data_list, f'{os.path.dirname(file_found)}{os.sep}*')
     
     
     report.end_artifact_report()
